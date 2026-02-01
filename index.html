@@ -175,6 +175,11 @@
             moveNoButton();
         });
 
+        noBtn.addEventListener("click", () => {
+            topGif.src = gifs.lookLeft;
+            moveNoButton();
+        });
+
         yesBtn.addEventListener("mouseenter", () => {
             topGif.src = gifs.lookRight;
         });
