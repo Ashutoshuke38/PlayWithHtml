@@ -1,208 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine 💖</title>
 
-<style>
-    body {
-        min-height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: 'Segoe UI', sans-serif;
-        padding: 15px;
-        box-sizing: border-box;
-    }
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family: 'Segoe UI', sans-serif;
+            padding: 15px;
+            box-sizing: border-box;
+        }
 
-    /* Loader */
-    .loader {
-        position: fixed;
-        inset: 0;
-        background: #ff9a9e;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        flex-direction: column;
-        color: white;
-        font-size: 18px;
-    }
+        /* Loader */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #ff9a9e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            color: white;
+            font-size: 18px;
+        }
 
-    .loader span {
-        margin-top: 10px;
-    }
+        .loader span {
+            margin-top: 10px;
+        }
 
-    .wrapper {
-        text-align: center;
-        width: 100%;
-        max-width: 420px;
-        display: none;
-    }
+        .wrapper {
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            display: none;
+        }
 
-    .waiting-gif {
-        width: 140px;
-        max-width: 60%;
-        margin-bottom: 10px;
-    }
+        .waiting-gif {
+            width: 140px;
+            max-width: 60%;
+            margin-bottom: 10px;
+        }
 
-    .card {
-        background: white;
-        padding: 30px 20px;
-        border-radius: 20px;
-        width: 100%;
-        min-height: 300px;
-        position: relative;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        box-sizing: border-box;
-    }
+        .card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            width: 100%;
+            min-height: 300px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
 
-    h1 {
-        color: #ff4d6d;
-        margin-bottom: 30px;
-        font-size: 22px;
-    }
+        h1 {
+            color: #ff4d6d;
+            margin-bottom: 30px;
+            font-size: 22px;
+        }
 
-    button {
-        padding: 12px 22px;
-        font-size: 16px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+        button {
+            padding: 12px 22px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    #yesBtn {
-        background: #ff4d6d;
-        color: white;
-        margin-right: 10px;
-    }
+        #yesBtn {
+            background: #ff4d6d;
+            color: white;
+            margin-right: 10px;
+        }
 
-    #noBtn {
-        background: #ddd;
-        color: #555;
-        position: absolute;
-    }
+        #noBtn {
+            background: #ddd;
+            color: #555;
+            position: absolute;
+        }
 
-    .success-gif {
-        width: 200px;
-        max-width: 80%;
-        margin-top: 15px;
-        border-radius: 15px;
-    }
-</style>
+        .success-gif {
+            width: 200px;
+            max-width: 80%;
+            margin-top: 15px;
+            border-radius: 15px;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- Loader -->
-<div class="loader" id="loader">
-    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" width="120">
-    <span>Loading.....</span>
-</div>
-
-<div class="wrapper" id="app">
-    <img id="topGif" class="waiting-gif" alt="Waiting">
-
-    <div class="card" id="card">
-        <h1 id="valentineText"></h1>
-        <button id="yesBtn">Yes 💕</button>
-        <button id="noBtn">No 💔</button>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" width="120">
+        <span>Loading.....</span>
     </div>
-</div>
 
-<script>
-    const gifs = {
-        idle: "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif",
-        lookLeft: "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
-        lookRight: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW1nc25lOWhnZWliaHY3aHM0dnoxM2VmemRob3d0ZGRxZ3U1cnQ3diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FmtaK8zS57mvWwxcWi/giphy.gif",
-        happy: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
-        success: "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-    };
+    <div class="wrapper" id="app">
+        <img id="topGif" class="waiting-gif" alt="Waiting">
 
-    const loader = document.getElementById("loader");
-    const app = document.getElementById("app");
+        <div class="card" id="card">
+            <h1 id="valentineText"></h1>
+            <button id="yesBtn">Yes 💕</button>
+            <button id="noBtn">No 💔</button>
+        </div>
+    </div>
 
-    // 🔥 Preload all GIFs
-    function preloadGifs(urls) {
-        return Promise.all(
-            urls.map(url => new Promise(resolve => {
-                const img = new Image();
-                img.src = url;
-                img.onload = resolve;
-                img.onerror = resolve;
-            }))
-        );
-    }
+    <script>
+        const gifs = {
+            idle: "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif",
+            lookLeft: "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+            lookRight: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW1nc25lOWhnZWliaHY3aHM0dnoxM2VmemRob3d0ZGRxZ3U1cnQ3diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FmtaK8zS57mvWwxcWi/giphy.gif",
+            happy: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+            success: "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+        };
 
-    preloadGifs(Object.values(gifs)).then(() => {
-        loader.style.display = "none";
-        app.style.display = "block";
-        initApp();
-    });
+        const loader = document.getElementById("loader");
+        const app = document.getElementById("app");
 
-
-
-
-    function initApp() {
-        const noBtn = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-        const card = document.getElementById("card");
-        const topGif = document.getElementById("topGif");
-
-        topGif.src = gifs.idle;
-
-
-             // 💖 Get name from URL
-        const valentineText = document.getElementById("valentineText");
-
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get("name");
-
-        if (name && name.trim() !== "") {
-            valentineText.innerHTML = `${name}, will you be my Valentine? 💖`;
-        } else {
-            valentineText.innerHTML = `Will you be my Valentine? 💖`;
+        // 🔥 Preload all GIFs
+        function preloadGifs(urls) {
+            return Promise.all(
+                urls.map(url => new Promise(resolve => {
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                }))
+            );
         }
 
-        function moveNoButton() {
-            const maxX = card.clientWidth - noBtn.offsetWidth;
-            const maxY = card.clientHeight - noBtn.offsetHeight;
-            noBtn.style.left = Math.random() * maxX + "px";
-            noBtn.style.top = Math.random() * maxY + "px";
-        }
-
-        noBtn.addEventListener("mouseenter", () => {
-            topGif.src = gifs.lookLeft;
-            moveNoButton();
+        preloadGifs(Object.values(gifs)).then(() => {
+            loader.style.display = "none";
+            app.style.display = "block";
+            initApp();
         });
 
-        noBtn.addEventListener("mousedown", () => {
-            topGif.src = gifs.lookLeft;
-            moveNoButton();
-        });
 
-        yesBtn.addEventListener("mouseenter", () => {
-            topGif.src = gifs.lookRight;
-        });
 
-        card.addEventListener("mouseleave", () => {
+
+        function initApp() {
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+            const card = document.getElementById("card");
+            const topGif = document.getElementById("topGif");
+
             topGif.src = gifs.idle;
-        });
 
-        yesBtn.addEventListener("click", () => {
-            topGif.src = gifs.happy;
-            card.innerHTML = `
+
+            // 💖 Get name from URL
+            const valentineText = document.getElementById("valentineText");
+
+            function decodeName(encoded) {
+                try {
+                    return atob(encoded);
+                } catch {
+                    return null;
+                }
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const encodedName = params.get("n");
+            const name = encodedName ? decodeName(encodedName) : null
+
+            if (name && name.trim() !== "") {
+                valentineText.innerHTML = `${name}, will you be my Valentine? 💖`;
+            } else {
+                valentineText.innerHTML = `Will you be my Valentine? 💖`;
+            }
+
+            function moveNoButton() {
+                const maxX = card.clientWidth - noBtn.offsetWidth;
+                const maxY = card.clientHeight - noBtn.offsetHeight;
+                noBtn.style.left = Math.random() * maxX + "px";
+                noBtn.style.top = Math.random() * maxY + "px";
+            }
+
+            noBtn.addEventListener("mouseenter", () => {
+                topGif.src = gifs.lookLeft;
+                moveNoButton();
+            });
+
+            noBtn.addEventListener("mousedown", () => {
+                topGif.src = gifs.lookLeft;
+                moveNoButton();
+            });
+
+            yesBtn.addEventListener("mouseenter", () => {
+                topGif.src = gifs.lookRight;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                topGif.src = gifs.idle;
+            });
+
+            yesBtn.addEventListener("click", () => {
+                topGif.src = gifs.happy;
+                card.innerHTML = `
                 <h1>Yayyy! 💘🥰</h1>
                 <p>You just made my day ❤️</p>
                 <img class="success-gif" src="${gifs.success}">
             `;
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
 </body>
+
 </html>
