@@ -144,16 +144,8 @@
         initApp();
     });
 
-     // 💖 Get name from URL
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get("name");
 
-    // 💌 Set text
-    if (name && name.trim() !== "") {
-        valentineText.innerHTML = `${name}, Will you be my Valentine? 💖`;
-    } else {
-        valentineText.innerHTML = `Will you be my Valentine? 💖`;
-    }
+
 
     function initApp() {
         const noBtn = document.getElementById("noBtn");
@@ -162,6 +154,19 @@
         const topGif = document.getElementById("topGif");
 
         topGif.src = gifs.idle;
+
+
+             // 💖 Get name from URL
+        const valentineText = document.getElementById("valentineText");
+
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get("name");
+
+        if (name && name.trim() !== "") {
+            valentineText.innerHTML = `${name}, will you be my Valentine? 💖`;
+        } else {
+            valentineText.innerHTML = `Will you be my Valentine? 💖`;
+        }
 
         function moveNoButton() {
             const maxX = card.clientWidth - noBtn.offsetWidth;
@@ -175,7 +180,7 @@
             moveNoButton();
         });
 
-        noBtn.addEventListener("click", () => {
+        noBtn.addEventListener("mousedown", () => {
             topGif.src = gifs.lookLeft;
             moveNoButton();
         });
