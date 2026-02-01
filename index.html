@@ -1,93 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Be My Valentine 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
 
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            font-family: 'Segoe UI', sans-serif;
-        }
+<style>
+    body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Segoe UI', sans-serif;
+        padding: 15px;
+        box-sizing: border-box;
+    }
 
-        .wrapper {
-            text-align: center;
-        }
+    .wrapper {
+        text-align: center;
+        width: 100%;
+        max-width: 420px;
+    }
 
-        .waiting-gif {
-            width: 180px;
-            margin-bottom: 10px;
-        }
+    .waiting-gif {
+        width: 140px;
+        max-width: 60%;
+        margin-bottom: 10px;
+    }
 
-        .card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            width: 380px;
-            height: 320px;
-            position: relative;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
+    .card {
+        background: white;
+        padding: 30px 20px;
+        border-radius: 20px;
+        width: 100%;
+        min-height: 300px;
+        position: relative;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        box-sizing: border-box;
+    }
 
-        h1 {
-            color: #ff4d6d;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
+    h1 {
+        color: #ff4d6d;
+        margin-bottom: 30px;
+        font-size: 22px;
+    }
 
-        button {
-            padding: 12px 28px;
-            font-size: 18px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    button {
+        padding: 12px 22px;
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.2s;
+        touch-action: manipulation;
+    }
 
-        #yesBtn {
-            background: #ff4d6d;
-            color: white;
-            margin-right: 15px;
-        }
+    #yesBtn {
+        background: #ff4d6d;
+        color: white;
+        margin-right: 10px;
+    }
 
-        #yesBtn:hover {
-            background: #ff1f4d;
-            transform: scale(1.05);
-        }
+    #noBtn {
+        background: #ddd;
+        color: #555;
+        position: absolute;
+    }
 
-        #noBtn {
-            background: #ddd;
-            color: #555;
-            position: absolute;
-        }
-
-        .success-gif {
-            width: 220px;
-            margin-top: 15px;
-            border-radius: 15px;
-        }
-    </style>
+    .success-gif {
+        width: 200px;
+        max-width: 80%;
+        margin-top: 15px;
+        border-radius: 15px;
+    }
+</style>
 </head>
+
 <body>
 
 <div class="wrapper">
-    <!-- Waiting / looking down GIF -->
-    <img 
+    <img
         id="topGif"
         class="waiting-gif"
         src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif"
-        alt="Waiting for your response"
+        alt="Waiting"
     >
 
     <div class="card" id="card">
         <h1>Will you be my Valentine? 💖</h1>
 
-        <button id="yesBtn" onclick="yesClicked()">Yes 💕</button>
+        <button id="yesBtn">Yes 💕</button>
         <button id="noBtn">No 💔</button>
     </div>
 </div>
@@ -98,41 +102,59 @@
     const card = document.getElementById("card");
     const topGif = document.getElementById("topGif");
 
-    const idlImage = "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif";
+    const idleGif = "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif";
     const lookLeftCat = "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif";
     const lookRightCat = "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif";
+    const happyGif = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
 
-    noBtn.addEventListener("mouseenter", () => {
-
-        topGif.src = lookLeftCat;
+    function moveNoButton() {
         const maxX = card.clientWidth - noBtn.offsetWidth;
         const maxY = card.clientHeight - noBtn.offsetHeight;
 
         noBtn.style.left = Math.random() * maxX + "px";
         noBtn.style.top = Math.random() * maxY + "px";
-    });
-
-
-    card.addEventListener("mouseleave", resetCat);
-    // noBtn.addEventListener("mouseleave", resetCat);
-
-    function resetCat() {
-        topGif.src = idlImage;
     }
 
+    // Desktop hover
+    noBtn.addEventListener("mouseenter", () => {
+        topGif.src = lookLeftCat;
+        moveNoButton();
+    });
+
+    yesBtn.addEventListener("mouseenter", () => {
+        topGif.src = lookRightCat;
+    });
+
+    // Mobile touch
+    noBtn.addEventListener("touchstart", () => {
+        topGif.src = lookLeftCat;
+        moveNoButton();
+    });
+
+    yesBtn.addEventListener("touchstart", () => {
+        topGif.src = lookRightCat;
+    });
+
+    card.addEventListener("mouseleave", resetCat);
+    card.addEventListener("touchend", resetCat);
+
+    function resetCat() {
+        topGif.src = idleGif;
+    }
+
+    yesBtn.addEventListener("click", yesClicked);
+
     function yesClicked() {
-        topGif.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
+        topGif.src = happyGif;
 
         card.innerHTML = `
             <h1>Yayyy! 💘🥰</h1>
-            <p style="font-size:18px; color:#555;">
+            <p style="font-size:16px; color:#555;">
                 You just made my day ❤️
             </p>
-            <img 
-                class="success-gif"
-                src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-                alt="Happy love gif"
-            >
+            <img class="success-gif"
+                 src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+                 alt="Happy">
         `;
     }
 </script>
